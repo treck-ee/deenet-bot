@@ -129,12 +129,11 @@ bot.action(/budget_(.+)/, async (ctx) => {
   await (ctx as any).answerCallback({});
 });
 
-// ---------- ВЕБХУК ЭНДПОИНТ С ПОДРОБНЫМ ЛОГИРОВАНИЕМ ----------
+// ---------- ВЕБХУК ЭНДПОИНТ ----------
 app.post('/webhook', async (req, res) => {
   console.log('📨 Webhook received');
-  console.log('Body:', JSON.stringify(req.body, null, 2));
   try {
-    // @ts-ignore - приватный метод, но работает
+    // @ts-ignore — метод приватный, но работает
     await bot.handleUpdate(req.body);
   } catch (err) {
     console.error('❌ handleUpdate error:', err);
@@ -145,7 +144,7 @@ app.post('/webhook', async (req, res) => {
 // Health check
 app.get('/', (req, res) => res.send('DeeNet Bot is running'));
 
-// ---------- АВТОМАТИЧЕСКАЯ УСТАНОВКА ВЕБХУКА ----------
+// ---------- УСТАНОВКА ВЕБХУКА ----------
 async function setupWebhook() {
   const token = process.env.BOT_TOKEN;
   const webhookUrl = `${process.env.WEBHOOK_URL}/webhook`;
@@ -181,26 +180,12 @@ async function setupWebhook() {
   }
 }
 
-// ---------- ЗАПУСК БОТА И СЕРВЕРА ----------
+// ---------- ЗАПУСК СЕРВЕРА ----------
 const PORT = Number(process.env.PORT) || 3000;
+app.listen(PORT, () => {
+  console.log(`🚀 Express server listening on port ${PORT}`);
+  console.log(`📍 Webhook URL: ${process.env.WEBHOOK_URL}/webhook`);
+  setupWebhook().catch(console.error);
+});
 
-async function start() {
-  try {
-    console.log('⏳ Запускаем бота (отключаем встроенный вебхук)...');
-    // Передаём webhook: false, чтобы бот не поднимал свой HTTP-сервер
-    await bot.start({ webhook: false } as any);
-    console.log('🤖 Бот инициализирован и готов принимать обновления');
-  } catch (err) {
-    console.error('❌ Ошибка при bot.start():', err);
-  }
-
-  // Запускаем Express сервер
-  app.listen(PORT, () => {
-    console.log(`🚀 Express server listening on port ${PORT}`);
-    console.log(`📍 Webhook URL: ${process.env.WEBHOOK_URL}/webhook`);
-    // Устанавливаем вебхук после того, как сервер готов
-    setupWebhook().catch(console.error);
-  });
-}
-
-start();
+// ⚠️ bot.start() НЕ ВЫЗЫВАЕМ! Библиотека работает через handleUpdate.
