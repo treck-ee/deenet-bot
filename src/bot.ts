@@ -86,7 +86,7 @@ bot.on('message_created', async (ctx) => {
   // /start
   if (text === '/start') {
     const kb = Keyboard.inlineKeyboard([
-      [Keyboard.button.callback('🎮 DeeNet Games (🎁 Скидки, Раздачи, Новинки, Халява)', 'menu_games')],
+      [Keyboard.button.callback('🎮 DeeNet Games <br> (🎁 Скидки, Раздачи, Новинки, Халява)', 'menu_games')],
       [Keyboard.button.callback('💻 DeeNet Tech (🔥 Скидки на ПК и комплектующие, Сборки)', 'menu_tech')],
       [Keyboard.button.callback('🏗️ DeeNet construction', 'menu_construction')],
     ]);
