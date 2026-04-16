@@ -78,7 +78,7 @@ bot.on('message_created', async (ctx) => {
       const kb = Keyboard.inlineKeyboard([
         [Keyboard.button.link('💬 Комментарии', link)],
       ]);
-      await ctx.reply('Обсудить это 👇', { attachments: [kb] });
+      await ctx.reply('Обсудить это👆 Можно тут 👇', { attachments: [kb] });
     }
     return;
   }
