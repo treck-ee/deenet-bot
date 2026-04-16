@@ -38,7 +38,7 @@ bot.use(async (ctx, next) => {
   }
 });
 
-// ---------- Первый вход пользователя (событие bot_started) ----------
+// ---------- Первый вход пользователя (bot_started) ----------
 bot.on('bot_started', async (ctx) => {
   const user = ctx.user as any;
   const chat = ctx.chat as any;
@@ -185,7 +185,7 @@ app.post('/webhook', async (req, res) => {
 
 app.get('/', (req, res) => res.send('DeeNet Bot is running'));
 
-// ---------- Установка вебхука ----------
+// ---------- Установка вебхука (ДОБАВЛЕН bot_started) ----------
 async function setupWebhook() {
   const token = process.env.BOT_TOKEN;
   const webhookUrl = `${process.env.WEBHOOK_URL}/webhook`;
@@ -193,7 +193,7 @@ async function setupWebhook() {
 
   const body = JSON.stringify({
     url: webhookUrl,
-    update_types: ['message_created', 'message_callback'],
+    update_types: ['message_created', 'message_callback', 'bot_started'], // ← добавили bot_started
   });
 
   try {
