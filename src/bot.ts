@@ -9,10 +9,10 @@ console.log('✅ Токен загружен:', process.env.BOT_TOKEN ? 'Да' :
 
 // ------------------- НАСТРОЙКИ -------------------
 const GAMES_CHANNEL_LINK = 'https://max.ru/join/zTl2L5Vf9uO5fyxtiwSiAJtVPTRD2Gn_OnUpKDOkRYM';
-const TECH_CHANNEL_LINK = 'https://max.ru/join/ВАША_ССЫЛКА_НА_TECH';
+const TECH_CHANNEL_LINK = 'https://max.ru/join/N2b38v9Gme1vpQcPOL9zNpHZoX2OUfL4eZdD4Oqdadg';
 const CONSTRUCTION_CHANNEL_LINK = 'https://max.ru/join/ВАША_ССЫЛКА_НА_CONSTRUCTION';
 
-const GAMES_DISCUSSION_LINK = 'https://max.ru/join/ССЫЛКА_НА_ЧАТ_ОБСУЖДЕНИЯ_GAMES';
+const GAMES_DISCUSSION_LINK = 'https://max.ru/join/vdLr4H5-M3AF-kPXLO2nKk-Jnw8RISTB-vUO2PR0i3s';
 const TECH_DISCUSSION_LINK = 'https://max.ru/join/ССЫЛКА_НА_ЧАТ_ОБСУЖДЕНИЯ_TECH';
 
 const GAMES_CHANNEL_ID = 0;
@@ -40,16 +40,22 @@ bot.use(async (ctx, next) => {
 
 // ---------- Сообщения ----------
 bot.on('message_created', async (ctx) => {
+  const msg = ctx.message as any;
   const chat = ctx.chat as any;
-  console.log('📌 Chat ID:', chat?.chat_id, '| Type:', chat?.type);
   const user = ctx.user as any;
-  const text = ctx.message?.body?.text;
+  const text = msg?.body?.text;
+
+  const recipient = msg?.recipient;
+  const chatId = chat?.chat_id || recipient?.chat_id;
+  const chatType = chat?.type || recipient?.chat_type;
+
+  console.log('📌 Chat ID:', chatId, '| Type:', chatType);
 
   // Автокомментарии в канале
-  if (chat?.type === 'channel') {
+  if (chatType === 'channel') {
     let link = '';
-    if (chat.chat_id === GAMES_CHANNEL_ID) link = GAMES_DISCUSSION_LINK;
-    else if (chat.chat_id === TECH_CHANNEL_ID) link = TECH_DISCUSSION_LINK;
+    if (chatId === GAMES_CHANNEL_ID) link = GAMES_DISCUSSION_LINK;
+    else if (chatId === TECH_CHANNEL_ID) link = TECH_DISCUSSION_LINK;
     if (link) {
       const kb = Keyboard.inlineKeyboard([
         [Keyboard.button.link('💬 Комментарии', link)],
@@ -68,7 +74,7 @@ bot.on('message_created', async (ctx) => {
     ]);
 
     const replyText = '👋 Добро пожаловать в DeeNet! Выберите раздел:';
-    if (chat?.chat_id) {
+    if (chatId) {
       await ctx.reply(replyText, { attachments: [kb] });
     } else if (user?.user_id) {
       await bot.api.sendMessageToUser(user.user_id, replyText, { attachments: [kb] });
