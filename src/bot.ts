@@ -86,10 +86,25 @@ bot.on('message_created', async (ctx) => {
   // /start
   if (text === '/start') {
     const kb = Keyboard.inlineKeyboard([
-      [Keyboard.button.callback('🎮 DeeNet Games\n(🎁 Скидки, Раздачи, Новинки, Халява)', 'menu_games')],
-      [Keyboard.button.callback('💻 DeeNet Tech\n(🔥 Скидки на ПК и комплектующие, Сборки)', 'menu_tech')],
-      [Keyboard.button.callback('🏗️ DeeNet construction', 'menu_construction')],
-    ]);
+  [
+    Keyboard.button.callback(
+      '🎮 DeeNet Games\n(🎁 Скидки, Раздачи, Новинки, Халява)',
+      'menu_games'
+    ),
+  ],
+  [
+    Keyboard.button.callback(
+      '💻 DeeNet Tech\n(🛒 Скидки на ПК и комплектующие)',
+      'menu_tech'
+    ),
+  ],
+  [
+    Keyboard.button.callback(
+      '🏗️ DeeNet construction\n(🏢 Объекты и подряды)',
+      'menu_construction'
+    ),
+  ],
+]);
 
     const replyText = '👋 Добро пожаловать в DeeNet! Выберите раздел:';
     if (chatId) {
