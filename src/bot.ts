@@ -41,6 +41,7 @@ bot.use(async (ctx, next) => {
 // ---------- Сообщения ----------
 bot.on('message_created', async (ctx) => {
   const chat = ctx.chat as any;
+  console.log('📌 Chat ID:', chat?.chat_id, '| Type:', chat?.type);
   const user = ctx.user as any;
   const text = ctx.message?.body?.text;
 
