@@ -183,11 +183,19 @@ async function setupWebhook() {
 
 // ---------- ЗАПУСК СЕРВЕРА ----------
 const PORT = Number(process.env.PORT) || 3000;
+
+// Сначала запускаем бота (это обязательно!)
+bot.start()
+  .then(() => {
+    console.log('🤖 Бот инициализирован');
+  })
+  .catch(err => {
+    console.error('❌ Ошибка при bot.start():', err);
+  });
+
+// Затем поднимаем Express
 app.listen(PORT, () => {
   console.log(`🚀 Express server listening on port ${PORT}`);
   console.log(`📍 Webhook URL: ${process.env.WEBHOOK_URL}/webhook`);
   setupWebhook().catch(console.error);
 });
-
-// ⚠️ bot.start() не вызываем, чтобы не мешать вебхуку.
-// Библиотека будет работать только через handleUpdate.
