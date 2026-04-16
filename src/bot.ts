@@ -181,21 +181,27 @@ async function setupWebhook() {
   }
 }
 
-// ---------- ЗАПУСК СЕРВЕРА ----------
+// ---------- ЗАПУСК БОТА И СЕРВЕРА (ПРАВИЛЬНЫЙ ПОРЯДОК) ----------
 const PORT = Number(process.env.PORT) || 3000;
 
-// Сначала запускаем бота (это обязательно!)
-bot.start()
-  .then(() => {
-    console.log('🤖 Бот инициализирован');
-  })
-  .catch(err => {
-    console.error('❌ Ошибка при bot.start():', err);
-  });
+async function start() {
+  try {
+    // 1. Сначала инициализируем бота
+    await bot.start();
+    console.log('🤖 Бот инициализирован и готов к работе');
 
-// Затем поднимаем Express
-app.listen(PORT, () => {
-  console.log(`🚀 Express server listening on port ${PORT}`);
-  console.log(`📍 Webhook URL: ${process.env.WEBHOOK_URL}/webhook`);
-  setupWebhook().catch(console.error);
-});
+    // 2. Затем запускаем Express сервер
+    app.listen(PORT, () => {
+      console.log(`🚀 Express server listening on port ${PORT}`);
+      console.log(`📍 Webhook URL: ${process.env.WEBHOOK_URL}/webhook`);
+
+      // 3. После запуска сервера устанавливаем вебхук
+      setupWebhook().catch(console.error);
+    });
+  } catch (err) {
+    console.error('❌ Критическая ошибка запуска:', err);
+    process.exit(1);
+  }
+}
+
+start();
