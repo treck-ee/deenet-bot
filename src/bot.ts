@@ -86,7 +86,9 @@ bot.on('message_created', async (ctx) => {
   if (text === '/start') {
   const description = `
  🎮 *DeeNet Games* — (🎁 Скидки, Раздачи, Новинки, Халява)
+ 
  💻 *DeeNet Tech* — (🛒 Скидки на ПК и комплектующие)
+ 
  🏗️ *DeeNet Construction* — (🏢 Объекты и подряды)
   `;
   
