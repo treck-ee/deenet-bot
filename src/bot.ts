@@ -21,12 +21,10 @@ const TECH_CHANNEL_ID = 0;
 
 const bot = new Bot(process.env.BOT_TOKEN!);
 
-// Установка команд
 bot.api.setMyCommands([
   { name: 'start', description: 'Главное меню' },
 ]);
 
-// Сессии
 const sessions = new Map<number, any>();
 
 bot.use(async (ctx, next) => {
@@ -85,7 +83,7 @@ bot.action('menu_games', async (ctx) => {
     [Keyboard.button.callback('🔙 Назад', 'menu_back')],
   ]);
   await ctx.reply('🎮 DeeNet Games — скидки на игры.', { attachments: [kb] });
-  await ctx.answerOnCallback({});
+  await ctx.answerOnCallback({ notification: '🎮 DeeNet Games' });
 });
 
 bot.action('menu_tech', async (ctx) => {
@@ -95,12 +93,12 @@ bot.action('menu_tech', async (ctx) => {
     [Keyboard.button.callback('🔙 Назад', 'menu_back')],
   ]);
   await ctx.reply('💻 DeeNet Tech — выберите действие:', { attachments: [kb] });
-  await ctx.answerOnCallback({});
+  await ctx.answerOnCallback({ notification: '💻 DeeNet Tech' });
 });
 
 bot.action('menu_construction', async (ctx) => {
   await ctx.reply('🏗️ Раздел находится в разработке.');
-  await ctx.answerOnCallback({});
+  await ctx.answerOnCallback({ notification: '🏗️ В разработке' });
 });
 
 bot.action('menu_back', async (ctx) => {
@@ -110,7 +108,7 @@ bot.action('menu_back', async (ctx) => {
     [Keyboard.button.callback('🏗️ DeeNet construction', 'menu_construction')],
   ]);
   await ctx.reply('👋 Главное меню:', { attachments: [kb] });
-  await ctx.answerOnCallback({});
+  await ctx.answerOnCallback({ notification: 'Главное меню' });
 });
 
 // ---------- Подбор бюджета ----------
@@ -123,12 +121,12 @@ bot.action('budget_start', async (ctx) => {
     [Keyboard.button.callback('🔙 Назад в Tech', 'menu_tech')],
   ]);
   await ctx.reply('🛠️ Выберите примерный бюджет сборки:', { attachments: [kb] });
-  await ctx.answerOnCallback({});
+  await ctx.answerOnCallback({ notification: 'Выбор бюджета' });
 });
 
 bot.action(/budget_(.+)/, async (ctx) => {
   const match = ctx.match;
-  if (!match) return ctx.answerOnCallback({});
+  if (!match) return ctx.answerOnCallback({ notification: 'Ошибка' });
   const budget = match[1];
   (ctx as any).session.step = undefined;
 
@@ -146,7 +144,7 @@ bot.action(/budget_(.+)/, async (ctx) => {
     [Keyboard.button.callback('🔙 В Tech меню', 'menu_tech')],
   ]);
   await ctx.reply(recommendation, { attachments: [kb] });
-  await ctx.answerOnCallback({});
+  await ctx.answerOnCallback({ notification: `Бюджет: ${budget}` });
 });
 
 // ---------- Вебхук ----------
