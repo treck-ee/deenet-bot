@@ -73,17 +73,6 @@ bot.on('message_created', async (ctx) => {
       [Keyboard.button.callback('🏗️ DeeNet construction', 'menu_construction')],
     ]);
 
-    const replyText = '👋 Добро пожаловать в DeeNet! Выберите раздел:';
-    if (chatId) {
-      await ctx.reply(replyText, { attachments: [kb] });
-    } else if (user?.user_id) {
-      await bot.api.sendMessageToUser(user.user_id, replyText, { attachments: [kb] });
-    }
-    return;
-  }
-});
-
-
 // ---------- Первый вход пользователя (событие bot_started) ----------
 bot.on('bot_started', async (ctx) => {
   const user = ctx.user as any;
@@ -99,6 +88,16 @@ bot.on('bot_started', async (ctx) => {
     await ctx.reply(replyText, { attachments: [kb] });
   } else if (user?.user_id) {
     await bot.api.sendMessageToUser(user.user_id, replyText, { attachments: [kb] });
+  }
+});
+
+    const replyText = '👋 Добро пожаловать в DeeNet! Выберите раздел:';
+    if (chatId) {
+      await ctx.reply(replyText, { attachments: [kb] });
+    } else if (user?.user_id) {
+      await bot.api.sendMessageToUser(user.user_id, replyText, { attachments: [kb] });
+    }
+    return;
   }
 });
 
