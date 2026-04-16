@@ -83,36 +83,34 @@ bot.on('message_created', async (ctx) => {
     return;
   }
 
-  // /start
   if (text === '/start') {
-    const kb = Keyboard.inlineKeyboard([
-  [
-    Keyboard.button.callback(
-      '🎮 DeeNet Games\n(🎁 Скидки, Раздачи, Новинки, Халява)',
-      'menu_games'
-    ),
-  ],
-  [
-    Keyboard.button.callback(
-      '💻 DeeNet Tech\n(🛒 Скидки на ПК и комплектующие)',
-      'menu_tech'
-    ),
-  ],
-  [
-    Keyboard.button.callback(
-      '🏗️ DeeNet construction\n(🏢 Объекты и подряды)',
-      'menu_construction'
-    ),
-  ],
-]);
+  const description = `
+ 🎮 *DeeNet Games* — (🎁 Скидки, Раздачи, Новинки, Халява)
+ 💻 *DeeNet Tech* — (🛒 Скидки на ПК и комплектующие)
+ 🏗️ *DeeNet construction* — (🏢 Объекты и подряды)
+  `;
+  
+  // Отправляем описание (Markdown)
+  if (chatId) {
+    await ctx.reply(description, { format: 'markdown' });
+  } else if (user?.user_id) {
+    await bot.api.sendMessageToUser(user.user_id, description, { format: 'markdown' });
+  }
 
-    const replyText = '👋 Добро пожаловать в DeeNet! Выберите раздел:';
-    if (chatId) {
-      await ctx.reply(replyText, { attachments: [kb] });
-    } else if (user?.user_id) {
-      await bot.api.sendMessageToUser(user.user_id, replyText, { attachments: [kb] });
-    }
-    return;
+  // Клавиатура с кнопками
+  const kb = Keyboard.inlineKeyboard([
+    [Keyboard.button.callback('🎮 DeeNet Games', 'menu_games')],
+    [Keyboard.button.callback('💻 DeeNet Tech', 'menu_tech')],
+    [Keyboard.button.callback('🏗️ DeeNet construction', 'menu_construction')],
+  ]);
+
+  const replyText = 'Выберите раздел:';
+  if (chatId) {
+    await ctx.reply(replyText, { attachments: [kb] });
+  } else if (user?.user_id) {
+    await bot.api.sendMessageToUser(user.user_id, replyText, { attachments: [kb] });
+  }
+  return;
   }
 });
 
