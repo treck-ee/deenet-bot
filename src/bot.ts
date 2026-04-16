@@ -45,7 +45,7 @@ bot.on('bot_started', async (ctx) => {
   const kb = Keyboard.inlineKeyboard([
     [Keyboard.button.callback('🎮 DeeNet Games', 'menu_games')],
     [Keyboard.button.callback('💻 DeeNet Tech', 'menu_tech')],
-    [Keyboard.button.callback('🏗️ DeeNet construction', 'menu_construction')],
+    [Keyboard.button.callback('🏗️ DeeNet Construction', 'menu_construction')],
   ]);
   const replyText = '👋 Добро пожаловать в DeeNet! Выберите раздел:';
 
@@ -87,7 +87,7 @@ bot.on('message_created', async (ctx) => {
   const description = `
  🎮 *DeeNet Games* — (🎁 Скидки, Раздачи, Новинки, Халява)
  💻 *DeeNet Tech* — (🛒 Скидки на ПК и комплектующие)
- 🏗️ *DeeNet construction* — (🏢 Объекты и подряды)
+ 🏗️ *DeeNet Construction* — (🏢 Объекты и подряды)
   `;
   
   // Отправляем описание (Markdown)
@@ -101,7 +101,7 @@ bot.on('message_created', async (ctx) => {
   const kb = Keyboard.inlineKeyboard([
     [Keyboard.button.callback('🎮 DeeNet Games', 'menu_games')],
     [Keyboard.button.callback('💻 DeeNet Tech', 'menu_tech')],
-    [Keyboard.button.callback('🏗️ DeeNet construction', 'menu_construction')],
+    [Keyboard.button.callback('🏗️ DeeNet Construction', 'menu_construction')],
   ]);
 
   const replyText = 'Выберите раздел:';
@@ -143,7 +143,7 @@ bot.action('menu_back', async (ctx) => {
   const kb = Keyboard.inlineKeyboard([
     [Keyboard.button.callback('🎮 DeeNet Games', 'menu_games')],
     [Keyboard.button.callback('💻 DeeNet Tech', 'menu_tech')],
-    [Keyboard.button.callback('🏗️ DeeNet construction', 'menu_construction')],
+    [Keyboard.button.callback('🏗️ DeeNet Construction', 'menu_construction')],
   ]);
   await ctx.reply('👋 Главное меню:', { attachments: [kb] });
   await ctx.answerOnCallback({ notification: 'Главное меню' });
