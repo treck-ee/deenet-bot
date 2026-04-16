@@ -13,10 +13,10 @@ const TECH_CHANNEL_LINK = 'https://max.ru/join/N2b38v9Gme1vpQcPOL9zNpHZoX2OUfL4e
 const CONSTRUCTION_CHANNEL_LINK = 'https://max.ru/join/ВАША_ССЫЛКА_НА_CONSTRUCTION';
 
 const GAMES_DISCUSSION_LINK = 'https://max.ru/join/vdLr4H5-M3AF-kPXLO2nKk-Jnw8RISTB-vUO2PR0i3s';
-const TECH_DISCUSSION_LINK = 'https://max.ru/join/ССЫЛКА_НА_ЧАТ_ОБСУЖДЕНИЯ_TECH';
+const TECH_DISCUSSION_LINK = 'https://max.ru/join/cXYvTqGKjbsqixKPf6L3zT8wzF7V2vp3ul68E66gfqw';
 
-const GAMES_CHANNEL_ID = 0;
-const TECH_CHANNEL_ID = 0;
+const GAMES_CHANNEL_ID = -73273754116277;
+const TECH_CHANNEL_ID = -73413069693109;
 // ------------------------------------------------
 
 const bot = new Bot(process.env.BOT_TOKEN!);
