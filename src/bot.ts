@@ -83,6 +83,25 @@ bot.on('message_created', async (ctx) => {
   }
 });
 
+
+// ---------- Первый вход пользователя (событие bot_started) ----------
+bot.on('bot_started', async (ctx) => {
+  const user = ctx.user as any;
+  const chat = ctx.chat as any;
+  const kb = Keyboard.inlineKeyboard([
+    [Keyboard.button.callback('🎮 DeeNet Games', 'menu_games')],
+    [Keyboard.button.callback('💻 DeeNet Tech', 'menu_tech')],
+    [Keyboard.button.callback('🏗️ DeeNet construction', 'menu_construction')],
+  ]);
+  const replyText = '👋 Добро пожаловать в DeeNet! Выберите раздел:';
+
+  if (chat?.chat_id) {
+    await ctx.reply(replyText, { attachments: [kb] });
+  } else if (user?.user_id) {
+    await bot.api.sendMessageToUser(user.user_id, replyText, { attachments: [kb] });
+  }
+});
+
 // ---------- Callback'и ----------
 bot.action('menu_games', async (ctx) => {
   const kb = Keyboard.inlineKeyboard([
